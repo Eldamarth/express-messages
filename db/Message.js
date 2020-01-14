@@ -12,6 +12,7 @@ const messageSchema = mongoose.Schema({
 const Message = mongoose.model("Message", messageSchema, "messages");
 
 const newMessage = (msg) => {
+    console.log(msg);
     const newMessage = new Message(msg);
     return newMessage.save()
     .then(results => results);
@@ -24,10 +25,14 @@ const findAllMessages = () => {
 const findMessage = (id) => {
     return Message.findById(id)
     .then(results => results)
+    .catch(err => {throw err})
 }
 const deleteMessage = (id) => {
     return Message.findByIdAndDelete(id)
 }
+const updateMessage = (id) => {
+    return Message.replaceOne(id)
+}
 
 
-module.exports = Message;
+module.exports = {Message,newMessage,findMessage,findAllMessages,deleteMessage,updateMessage};

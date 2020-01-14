@@ -11,13 +11,25 @@ app.use(bodyParser.json());
 //   res.status(404).send('That route does not exist');
 // });
 
+// newMessage, findAllMessages, findMessage, deleteMessage
+
 // CREATE
-// app.post()
+app.post('/api/messages/', (req, res) => {
+  Message.newMessage( {name: req.body.name, message: req.body.message} );
+  res.send(200);
+})
 
 
 // RETRIEVE
+
 app.get('/api/messages/', (req, res) => {
   res.send(200);
+})
+
+app.get('/api/messages/:id', (req,res) => {
+  Message.findMessage(req.params)
+  .then (results => res.send(results))
+  .catch (err => {throw err})
 })
 
 // UPDATE
