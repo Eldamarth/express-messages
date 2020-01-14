@@ -1,13 +1,14 @@
 //Message Model
 const mongoose = require('mongoose');
 const db = require('./config');
-const database = db.connection;
-
+// const database = db.connection;
+const autoIncrement = require('mongoose-auto-increment');
 const messageSchema = mongoose.Schema({
     name: String,
     message: String
 })
-
+autoIncrement.initialize(mongoose);
+messageSchema.plugin(autoIncrement.plugin, "Message");
 
 const Message = mongoose.model("Message", messageSchema, "messages");
 
@@ -22,14 +23,17 @@ const findAllMessages = () => {
     return Message.find()
     .then(results => results)
 }
+
 const findMessage = (id) => {
     return Message.findById(id)
     .then(results => results)
     .catch(err => {throw err})
 }
+
 const deleteMessage = (id) => {
     return Message.findByIdAndDelete(id)
 }
+
 const updateMessage = (id) => {
     return Message.replaceOne(id)
 }
