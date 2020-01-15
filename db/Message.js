@@ -32,10 +32,14 @@ const findMessage = (id) => {
 
 const deleteMessage = (id) => {
     return Message.findByIdAndDelete(id)
+    .then (results =>  results)
+    .catch(err => {throw err})
 }
 
-const updateMessage = (id) => {
-    return Message.replaceOne(id)
+const updateMessage = (id, msg) => {
+    return Message.updateOne({_id: id}, msg)
+    .then (results => results)
+    .catch (err => {throw err})
 }
 
 
